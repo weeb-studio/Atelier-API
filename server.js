@@ -19,6 +19,15 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// routes
+/*const authRoute = */ require('./api/routes/auth.route')(app);
+/*const userRoute = */ require('./api/routes/user.route')(app);
+/*const atelierRoute = */ require('./api/routes/atelier.route')(app);
+
+// app.use('/auth', authRoute);
+// app.use('/user', userRoute);
+// app.use('/atelier', atelierRoute);
+
 db.mongoose
   .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
     useNewUrlParser: true,
@@ -84,12 +93,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Bienvenue sur l'API BiGooDee Atélier." });
 });
 
-// routes
-const authRoute = require('./api/routes/auth.route');
-const userRoute = require('./api/routes/user.route');
 
-app.use('/auth', authRoute);
-app.use('/user', userRoute);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
