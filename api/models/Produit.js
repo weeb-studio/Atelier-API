@@ -26,7 +26,7 @@ const produitSchema = new mongoose.Schema({
     required: true,
   },
 
-  capite: {
+  capacite: {
       type: Number,
       required: true
   },
