@@ -7,6 +7,10 @@ db.mongoose = mongoose;
 
 db.user = require("./Utilisateur");
 db.role = require("./Role");
+db.atelier = require("./Atelier");
+db.document = require("./Document");
+db.formation = require("./Formation");
+db.produit = require("./Produit");
 
 db.ROLES = ["user", "hotesse", "conseillere", "admin"];
 
