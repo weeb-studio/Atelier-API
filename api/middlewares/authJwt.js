@@ -16,7 +16,6 @@ verifyToken = (req, res, next) => {
       return res.status(401).send({ message: "Unauthorized!" });
     }
     req.userId = decoded.id;
-    console.log(decoded)
     next();
   });
 };
@@ -30,7 +29,6 @@ isAdmin = (req, res, next) => {
 
     Role.findById(user.role).exec(
       (err, roles) => {
-          console.log(roles);
         if (err) {
           res.status(500).send({ message: err });
           return;
@@ -56,7 +54,6 @@ isHotesse = (req, res, next) => {
   
       Role.findById(user.role).exec(
         (err, roles) => {
-            console.log(roles);
           if (err) {
             res.status(500).send({ message: err });
             return;
@@ -82,7 +79,6 @@ isConseillere = (req, res, next) => {
   
       Role.findById(user.role).exec(
         (err, roles) => {
-            console.log(roles);
           if (err) {
             res.status(500).send({ message: err });
             return;
