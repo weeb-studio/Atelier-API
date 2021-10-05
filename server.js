@@ -110,7 +110,7 @@ app.get("/", (req, res) => {
 });
 
 // set port, listen for requests
-const PORT = 3080;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
