@@ -1,17 +1,30 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require("cors");
+// const cors = require("cors");
 const db = require("./api/models");
 const dbConfig = require("./api/config/db.config");
 
 const app = express();
 const Role = db.role;
 
-var corsOptions = {
-  origin: "http://localhost:8080"
-};
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-access-token"
+  );
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+    return res.status(200).json({});
+  }
+  next();
+});
 
-app.use(cors(corsOptions));
+// var corsOptions = {
+//   origin: "http://localhost:8080",
+// };
+
+// app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -20,24 +33,27 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
-/*const authRoute = */ require('./api/routes/auth.route')(app);
-/*const userRoute = */ require('./api/routes/user.route')(app);
-/*const atelierRoute = */ require('./api/routes/atelier.route')(app);
+/*const authRoute = */ require("./api/routes/auth.route")(app);
+/*const userRoute = */ require("./api/routes/user.route")(app);
+/*const atelierRoute = */ require("./api/routes/atelier.route")(app);
 
 // app.use('/auth', authRoute);
 // app.use('/user', userRoute);
 // app.use('/atelier', atelierRoute);
 
 db.mongoose
-  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  .connect(
+    `${dbConfig.URL}` /*`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`*/,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("Successfully connect to MongoDB.");
     initial();
   })
-  .catch(err => {
+  .catch((err) => {
     console.error("Connection error", err);
     process.exit();
   });
@@ -46,8 +62,8 @@ function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Role({
-        nom: "user"
-      }).save(err => {
+        nom: "user",
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -56,8 +72,8 @@ function initial() {
       });
 
       new Role({
-        nom: "hotesse"
-      }).save(err => {
+        nom: "hotesse",
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -66,8 +82,8 @@ function initial() {
       });
 
       new Role({
-        nom: "conseillere"
-      }).save(err => {
+        nom: "conseillere",
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -76,8 +92,8 @@ function initial() {
       });
 
       new Role({
-        nom: "admin"
-      }).save(err => {
+        nom: "admin",
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -92,8 +108,6 @@ function initial() {
 app.get("/", (req, res) => {
   res.json({ message: "Bienvenue sur l'API BiGooDee Atélier." });
 });
-
-
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
