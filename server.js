@@ -1,4 +1,6 @@
 const express = require("express");
+var helmet = require("helmet");
+
 const bodyParser = require("body-parser");
 // const cors = require("cors");
 const db = require("./api/models");
@@ -6,6 +8,9 @@ const dbConfig = require("./api/config/db.config");
 
 const app = express();
 const Role = db.role;
+
+app.use(helmet());
+app.disable("x-powered-by");
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
