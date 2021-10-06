@@ -17,6 +17,28 @@ exports.moderatorBoard = (req, res) => {
   res.status(200).send("Moderator Content.");
 };
 
+exports.validate = (req, res) => {
+  const id = req.params.uid;
+  var user = {};
+  if (req.body.status) user.status = req.body.status;
+  User.update({ _id: id }, { $set: user })
+    .exec()
+    .then((resultat) => {
+      if (!resultat)
+        return res.status(404).json({
+          message: "Oups!! aucune information pour l'identifiant fourni",
+        });
+      res.status(200).json(resultat);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: "Oups!! une erreur est survenue",
+        error: err,
+      });
+    });
+};
+
 exports.unvalidateConseiller = (req, res) => {
   User.find({
     $and: [{ status: false }],

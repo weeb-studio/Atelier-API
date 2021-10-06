@@ -30,4 +30,9 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.unvalidateConseiller
   );
+  app.put(
+    "/user/:uid",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.validate
+  );
 };
