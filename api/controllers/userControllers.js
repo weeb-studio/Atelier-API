@@ -60,3 +60,32 @@ exports.unvalidateConseiller = (req, res) => {
       }
     });
 };
+
+exports.getTypeOfUsers = (req, res) => {
+  const type = req.params.type;
+  User.find({ status: true })
+    .populate("role", "-__v")
+    .select(
+      "_id nom prenom email ville postal status numero role createdAt updatedAt"
+    )
+
+    .exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      if (user.length == 0) {
+        return res.status(404).send({ message: "User Not found." });
+      } else {
+        var result = [];
+
+        user.forEach((element) => {
+          if (element.role.nom == type) {
+            result.push(element);
+          }
+        });
+        res.status(200).send(result);
+      }
+    });
+};

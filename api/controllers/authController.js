@@ -107,6 +107,12 @@ exports.signin = (req, res) => {
           .send({ message: "Nom d'utilisateur ou mot de passe incorrect." });
       }
 
+      if (!user.status) {
+        return res.status(400).send({
+          message: "Votre compte n'a pas encore été.",
+        });
+      }
+
       var passwordIsValid = bcrypt.compareSync(
         req.body.password,
         user.password
