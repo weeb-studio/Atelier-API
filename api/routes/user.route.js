@@ -36,5 +36,9 @@ module.exports = function (app) {
     controller.validate
   );
 
-  app.get("/users/:type", [], controller.getTypeOfUsers);
+  app.get(
+    "/users/:type",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.getTypeOfUsers
+  );
 };
