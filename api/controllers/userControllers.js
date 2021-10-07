@@ -89,3 +89,25 @@ exports.getTypeOfUsers = (req, res) => {
       }
     });
 };
+
+exports.getUserById = (req, res) => {
+  const uid = req.params.uid;
+  User.findById(uid)
+    .populate("role", "-__v")
+    .select(
+      "_id nom prenom email ville postal status numero role createdAt updatedAt"
+    )
+
+    .exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      if (!user) {
+        return res.status(404).send({ message: "User Not found." });
+      } else {
+        res.status(200).send(user);
+      }
+    });
+};

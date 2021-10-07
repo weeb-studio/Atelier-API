@@ -25,6 +25,13 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
+
+  app.get(
+    "/user/:uid",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.getUserById
+  );
+
   app.get(
     "/unvalid",
     [authJwt.verifyToken, authJwt.isAdmin],
