@@ -24,6 +24,10 @@ exports.signup = (req, res) => {
       return;
     }
 
+    if (req.body.status) {
+      user.status = req.body.status;
+    }
+
     if (req.body.role) {
       if (ROLES.includes(req.body.role)) {
         Role.findOne({ nom: req.body.role }, (err, role) => {
