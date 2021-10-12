@@ -17,7 +17,7 @@ verifyToken = (req, res, next) => {
     }
     // console.log(decoded)
     req.userId = decoded.id;
-    req.role = decoded.role
+    req.role = decoded.role;
     next();
   });
 };
@@ -28,73 +28,67 @@ isAdmin = (req, res, next) => {
       res.status(500).send({ message: err });
       return;
     }
-    
-    Role.findById(user.role).exec(
-      (err, roles) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-        if (roles.nom === "admin") {
-            next();
-            return;
-        }
 
-        res.status(403).send({ message: "Require Admin Role!" });
+    Role.findById(user.role).exec((err, roles) => {
+      if (err) {
+        res.status(500).send({ message: err });
         return;
       }
-    );
+      if (roles.nom === "admin") {
+        next();
+        return;
+      }
+
+      res.status(403).send({ message: "Require Admin Role!" });
+      return;
+    });
   });
 };
 
 isHotesse = (req, res, next) => {
-    User.findById(req.userId).exec((err, user) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    Role.findById(user.role).exec((err, roles) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
-  
-      Role.findById(user.role).exec(
-        (err, roles) => {
-          if (err) {
-            res.status(500).send({ message: err });
-            return;
-          }
-          if (roles.nom === "hotesse") {
-              next();
-              return;
-          }
-  
-          res.status(403).send({ message: "Require Hotesse Role!" });
-          return;
-        }
-      );
+      if (roles.nom === "hotesse") {
+        next();
+        return;
+      }
+
+      res.status(403).send({ message: "Require Hotesse Role!" });
+      return;
     });
+  });
 };
 
 isConseillere = (req, res, next) => {
-    User.findById(req.userId).exec((err, user) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    Role.findById(user.role).exec((err, roles) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
-  
-      Role.findById(user.role).exec(
-        (err, roles) => {
-          if (err) {
-            res.status(500).send({ message: err });
-            return;
-          }
-          if (roles.nom === "conseillere") {
-              next();
-              return;
-          }
-  
-          res.status(403).send({ message: "Require Conseillere Role!" });
-          return;
-        }
-      );
+      if (roles.nom === "conseillere") {
+        next();
+        return;
+      }
+
+      res.status(403).send({ message: "Require Conseillere Role!" });
+      return;
     });
+  });
 };
 
 // isModerator = (req, res, next) => {
@@ -132,6 +126,6 @@ const authJwt = {
   verifyToken,
   isAdmin,
   isHotesse,
-  isConseillere
+  isConseillere,
 };
 module.exports = authJwt;

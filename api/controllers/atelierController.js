@@ -6,14 +6,34 @@ exports.Hello_Word = (req, res) => {
 };
 
 exports.createAtelier = (req, res) => {
-  const atelier = new Atelier({
-    place: req.body.place,
-    theme: req.body.theme,
-    hotesse: req.body.hotesse,
-    status: req.body.status,
-    ouvert: req.body.ouvert,
-    conseillere: req.userId,
-  });
+  var atelier;
+  if (req.body.hotesse) {
+    atelier = new Atelier({
+      place: req.body.place,
+      theme: req.body.theme,
+      hotesse: req.body.hotesse,
+      date: req.body.date,
+      time: req.body.time,
+      status: req.body.status,
+      ouvert: req.body.ouvert,
+      conseillere: req.userId,
+    });
+  } else {
+    atelier = new Atelier({
+      place: req.body.place,
+      theme: req.body.theme,
+      nomHotesse: req.body.nomHotesse,
+      prenomHotesse: req.body.prenomHotesse,
+      adresseHotesse: req.body.adresseHotesse,
+      postal: req.body.postal,
+      villeHotesse: req.body.villeHotesse,
+      date: req.body.date,
+      time: req.body.time,
+      status: req.body.status,
+      ouvert: req.body.ouvert,
+      conseillere: req.userId,
+    });
+  }
 
   atelier
     .save()
@@ -29,8 +49,24 @@ exports.createAtelier = (req, res) => {
     });
 };
 
-exports.userBoard = (req, res) => {
-  res.status(200).send("User Content.");
+exports.getconseillereAtelier = (req, res) => {
+  Atelier.find({ conseillere: req.userId })
+    .populate({
+      path: "hotesse",
+      match: { hotesse: !null },
+      select:
+        "_id nom prenom email ville postal status numero role createdAt updatedAt",
+    })
+
+    // "hotesse", null, { hotesse: !null })
+    .exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      return res.status(200).send(user);
+    });
 };
 
 exports.adminBoard = (req, res) => {
