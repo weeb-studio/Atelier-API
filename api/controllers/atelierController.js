@@ -5,6 +5,26 @@ exports.Hello_Word = (req, res) => {
   res.send("Hello Atelier");
 };
 
+exports.get_all_atelier = (req, res) => {
+  let query = "";
+  if (req.query.ville) query = req.query.ville;
+  Atelier.find({ ville: { $regex: query, $options: "$i" } })
+    .exec()
+    .then((resultats) =>
+      res.status(200).json({
+        count: resultats.length,
+        data: resultats,
+      })
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: "Oups!! une erreur est survenue",
+        error: err,
+      });
+    });
+};
+
 exports.createAtelier = (req, res) => {
   var atelier;
   if (req.body.hotesse) {

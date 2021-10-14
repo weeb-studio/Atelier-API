@@ -25,6 +25,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/uploads", express.static("uploads"));
+
 // var corsOptions = {
 //   origin: "http://localhost:8080",
 // };
@@ -41,6 +43,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /*const authRoute = */ require("./api/routes/auth.route")(app);
 /*const userRoute = */ require("./api/routes/user.route")(app);
 /*const atelierRoute = */ require("./api/routes/atelier.route")(app);
+require("./api/routes/produit.route")(app);
+require("./api/routes/catalogue.route")(app);
 
 // app.use('/auth', authRoute);
 // app.use('/user', userRoute);
