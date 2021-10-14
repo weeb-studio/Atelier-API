@@ -17,20 +17,10 @@ module.exports = function (app) {
   );
 
   app.get(
-    "/atelier",
+    "/atelier/conseillere",
     [authJwt.verifyToken, authJwt.isConseillere],
     controller.getconseillereAtelier
   );
 
-  app.get(
-    "/mod",
-    [authJwt.verifyToken, authJwt.isConseillere],
-    controller.moderatorBoard
-  );
-
-  app.get(
-    "/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
-  );
+  app.get("/atelier", [authJwt.verifyToken], controller.get_all_atelier);
 };
