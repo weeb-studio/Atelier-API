@@ -29,9 +29,20 @@ exports.createAtelier = (req, res) => {
   var atelier;
   if (req.body.hotesse) {
     atelier = new Atelier({
+      // place: req.body.place,
+      // theme: req.body.theme,
+      // hotesse: req.body.hotesse,
+      // date: req.body.date,
+      // time: req.body.time,
+      // status: req.body.status,
+      // ouvert: req.body.ouvert,
+      // conseillere: req.userId,
+
       place: req.body.place,
       theme: req.body.theme,
+      postal: req.body.postal,
       hotesse: req.body.hotesse,
+      villeHotesse: req.body.villeHotesse,
       date: req.body.date,
       time: req.body.time,
       status: req.body.status,
