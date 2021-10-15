@@ -22,5 +22,5 @@ module.exports = function (app) {
     controller.getconseillereAtelier
   );
 
-  app.get("/atelier", [authJwt.verifyToken], controller.get_all_atelier);
+  app.get("/atelier", controller.get_all_atelier);
 };

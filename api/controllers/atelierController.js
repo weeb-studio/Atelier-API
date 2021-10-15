@@ -8,7 +8,7 @@ exports.Hello_Word = (req, res) => {
 exports.get_all_atelier = (req, res) => {
   let query = "";
   if (req.query.ville) query = req.query.ville;
-  Atelier.find({ ville: { $regex: query, $options: "$i" } })
+  Atelier.find({ villeHotesse: { $regex: query, $options: "$i" } })
     .exec()
     .then((resultats) =>
       res.status(200).json({
