@@ -29,8 +29,8 @@ exports.get_catalogue = (req, res) => {
   Catalogue.find()
     .populate("produit")
     .exec()
-    .then((res) => {
-      res.status(200).json(res);
+    .then((resultat) => {
+      return res.status(200).json(resultat);
     })
     .catch((err) => {
       console.log(err);
