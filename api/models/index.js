@@ -12,6 +12,7 @@ db.document = require("./Document");
 db.formation = require("./Formation");
 db.produit = require("./Produit");
 db.catalogue = require("./Catalogue");
+db.contact = require("./Contact");
 
 db.ROLES = ["user", "hotesse", "conseillere", "admin"];
 

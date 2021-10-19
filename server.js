@@ -45,6 +45,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /*const atelierRoute = */ require("./api/routes/atelier.route")(app);
 require("./api/routes/produit.route")(app);
 require("./api/routes/catalogue.route")(app);
+require("./api/routes/contact.route")(app);
 
 // app.use('/auth', authRoute);
 // app.use('/user', userRoute);
