@@ -86,7 +86,7 @@ exports.getconseillereAtelier = (req, res) => {
       path: "hotesse",
       match: { hotesse: !null },
       select:
-        "_id nom prenom email ville postal status numero role createdAt updatedAt",
+        "_id nom prenom email adresse ville postal status numero role createdAt updatedAt",
     })
 
     // "hotesse", null, { hotesse: !null })

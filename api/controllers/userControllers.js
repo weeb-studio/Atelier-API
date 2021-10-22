@@ -44,7 +44,7 @@ exports.unvalidateConseiller = (req, res) => {
     $and: [{ status: false }],
   })
     .select(
-      "_id nom prenom email ville postal status numero role createdAt updatedAt"
+      "_id nom prenom email adresse ville postal status numero role createdAt updatedAt"
     )
     .populate("role", "-__v")
     .exec((err, user) => {
@@ -66,7 +66,7 @@ exports.getTypeOfUsers = (req, res) => {
   User.find({ status: true })
     .populate("role", "-__v")
     .select(
-      "_id nom prenom email ville postal status numero role createdAt updatedAt"
+      "_id nom prenom email adresse ville postal status numero role createdAt updatedAt"
     )
 
     .exec((err, user) => {
@@ -95,7 +95,7 @@ exports.getUserById = (req, res) => {
   User.findById(uid)
     .populate("role", "-__v")
     .select(
-      "_id nom prenom email ville postal status numero role createdAt updatedAt"
+      "_id nom prenom email adresse ville postal status numero role createdAt updatedAt"
     )
 
     .exec((err, user) => {
