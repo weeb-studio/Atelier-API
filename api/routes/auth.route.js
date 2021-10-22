@@ -20,6 +20,6 @@ module.exports = function (app) {
   );
 
   app.get("/auth/profile", [authJwt.verifyToken], controller.getCurrentUser);
-
+  app.put("/auth/update", [authJwt.verifyToken], controller.updateUser);
   app.post("/auth/signin", controller.signin);
 };

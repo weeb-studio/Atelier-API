@@ -27,6 +27,11 @@ const userSchema = new mongoose.Schema(
       max: 255,
     },
 
+    imageURL: {
+      type: String,
+      default: "",
+    },
+
     adresse: {
       type: String,
       required: true,
