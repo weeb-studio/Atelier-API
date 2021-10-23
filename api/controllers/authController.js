@@ -94,17 +94,9 @@ exports.getCurrentUser = (req, res) => {
 exports.updateUser = (req, res) => {
   let userData = {};
 
-  User.find({ email: req.body.email })
-    .exec()
-    .then((resultat) => {
-      if (resultat.length != 0)
-        return res.status(400).send({ message: "l'email est dèjà utilisée" });
-    });
-
   if (req.body.nom) userData.nom = req.body.nom;
   if (req.body.prenom) userData.prenom = req.body.prenom;
   if (req.body.adresse) userData.adresse = req.body.adresse;
-  if (req.body.email) userData.email = req.body.email;
   if (req.body.telephone) userData.numero = req.body.telephone;
   if (req.body.postal) userData.postal = req.body.postal;
   if (req.file) userData.imageURL = req.file.path;

@@ -1,5 +1,6 @@
 const { verifySignUp, authJwt } = require("../middlewares");
 const controller = require("../controllers/authController");
+const upload = require("../utils/upload");
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -20,6 +21,11 @@ module.exports = function (app) {
   );
 
   app.get("/auth/profile", [authJwt.verifyToken], controller.getCurrentUser);
-  app.put("/auth/update", [authJwt.verifyToken], controller.updateUser);
+  app.put(
+    "/auth/update",
+    [authJwt.verifyToken],
+    upload.single("imageURL"),
+    controller.updateUser
+  );
   app.post("/auth/signin", controller.signin);
 };
