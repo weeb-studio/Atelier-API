@@ -74,7 +74,7 @@ exports.signup = (req, res) => {
 exports.getCurrentUser = (req, res) => {
   User.findById(req.userId)
     .select(
-      "_id nom prenom email adresse ville postal status numero role createdAt updatedAt"
+      "_id nom prenom email imageURL adresse ville postal status numero role createdAt updatedAt"
     )
     .populate("role", "-__v")
     .exec((err, user) => {
