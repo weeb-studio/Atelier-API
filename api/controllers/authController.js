@@ -99,7 +99,6 @@ exports.updateUser = (req, res) => {
   if (req.body.adresse) userData.adresse = req.body.adresse;
   if (req.body.telephone) userData.numero = req.body.telephone;
   if (req.body.postal) userData.postal = req.body.postal;
-  if (req.file) userData.imageURL = req.file.path;
   if (req.body.ville) userData.ville = req.body.ville;
 
   User.update({ _id: req.userId }, { $set: userData })
@@ -118,6 +117,32 @@ exports.updateUser = (req, res) => {
       console.log(err);
       res.status(500).json({
         message: "Oups!! une erreur est survenue",
+        error: err,
+      });
+    });
+};
+
+exports.updateUserImage = (req, res) => {
+  let userData = {};
+
+  userData.imageURL = req.file.path;
+
+  User.update({ _id: req.userId }, { $set: userData })
+    .exec()
+    .then((resultat) => {
+      if (!resultat)
+        return res.status(404).json({
+          message: "Oups!! aucune information pour l'identifiant fourni",
+        });
+      res.status(200).json({
+        message: "Mise à jour reussie",
+        doc: resultat,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: "Oups!! une erreur est survenue sur le serveur",
         error: err,
       });
     });
