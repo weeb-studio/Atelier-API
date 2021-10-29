@@ -22,5 +22,9 @@ module.exports = function (app) {
     controller.getconseillereAtelier
   );
 
-  app.get("/atelier", controller.get_all_atelier);
+  app.get(
+    "/atelier",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.get_all_atelier
+  );
 };
