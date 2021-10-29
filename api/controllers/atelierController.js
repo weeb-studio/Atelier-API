@@ -9,7 +9,7 @@ exports.get_all_atelier = (req, res) => {
   let query = "";
   if (req.query.ville) query = req.query.ville;
   Atelier.find({ villeHotesse: { $regex: query, $options: "$i" } })
-    .populate("hotesse")
+    .populate("hotesse conseillere")
     .exec()
     .then((resultats) =>
       res.status(200).json({
