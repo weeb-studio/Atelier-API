@@ -24,7 +24,6 @@ module.exports = function (app) {
 
   app.get(
     "/atelier",
-    [authJwt.verifyToken, authJwt.isAdmin],
     controller.get_all_atelier
   );
 };
