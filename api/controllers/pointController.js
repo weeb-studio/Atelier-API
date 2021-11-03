@@ -43,7 +43,7 @@ exports.addPoint = (req, res) => {
   }
 
   Point.findOneAndUpdate(
-    { hostesse: req.userId },
+    { hotesse: req.userId },
     { $inc: { nombre: pointData } },
     { new: true }
   )
@@ -90,7 +90,7 @@ exports.removePoint = (req, res) => {
   }
 
   Point.findOneAndUpdate(
-    { hostesse: req.userId },
+    { hotesse: req.userId },
     { $inc: { nombre: -1 * pointData } },
     { new: true }
   )
