@@ -17,8 +17,14 @@ module.exports = function (app) {
   );
 
   app.put(
-    "/point",
+    "/point/add",
     [authJwt.verifyToken, authJwt.isHotesse],
     controller.addPoint
+  );
+
+  app.put(
+    "/point/remove",
+    [authJwt.verifyToken, authJwt.isHotesse],
+    controller.removePoint
   );
 };
