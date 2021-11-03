@@ -13,6 +13,8 @@ db.formation = require("./Formation");
 db.produit = require("./Produit");
 db.catalogue = require("./Catalogue");
 db.contact = require("./Contact");
+db.cadeau = require("./Cadeau");
+db.point = require("./Point");
 
 db.ROLES = ["user", "hotesse", "conseillere", "admin"];
 

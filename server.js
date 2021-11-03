@@ -60,6 +60,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 require("./api/routes/produit.route")(app);
 require("./api/routes/catalogue.route")(app);
 require("./api/routes/contact.route")(app);
+require("./api/routes/point.route")(app);
 
 // app.use('/auth', authRoute);
 // app.use('/user', userRoute);
