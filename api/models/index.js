@@ -15,6 +15,7 @@ db.catalogue = require("./Catalogue");
 db.contact = require("./Contact");
 db.cadeau = require("./Cadeau");
 db.point = require("./Point");
+db.panier = require("./panier");
 
 db.ROLES = ["user", "hotesse", "conseillere", "admin"];
 
