@@ -13,6 +13,22 @@ const cadeauSchema = new mongoose.Schema(
       ref: "utilisateur",
       required: true,
     },
+    qte: {
+      type: Number,
+      required: true,
+      default: 1,
+      min: 0,
+      validate: {
+        validator: Number.isInteger,
+        message: "{VALUE} is not an integer value",
+      },
+    },
+    status: {
+      type: String,
+      enum: ["AWAIT", "VALIDATE"],
+      default: "AWAIT",
+      required: true,
+    },
   },
   { timestamps: true }
 );
