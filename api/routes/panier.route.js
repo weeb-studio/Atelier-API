@@ -1,3 +1,4 @@
+const { authJwt } = require("../middlewares");
 const controller = require("../controllers/paniercontroller");
 
 module.exports = function (app) {
@@ -10,10 +11,12 @@ module.exports = function (app) {
       });
     app.post(
         "/panier",
+        [authJwt.verifyToken],
         controller.addpanier
     );
     app.get(
         "/panier", 
+        [authJwt.verifyToken],
         controller.get_panier
     );
 }

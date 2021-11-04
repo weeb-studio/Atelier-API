@@ -3,10 +3,11 @@ const db = require("../models");
 const Panier = db.panier;
 
 exports.addpanier = (req, res) => {
+  console.log(req.userId)
   let panier = new Panier({
-    role: req.body.clienteId,
-    produit: produit.body.produitId,
-    quantite: req.body.quantite,
+    client: req.userId,
+    produit: req.body.produitId,
+    qte: req.body.quantite,
   });
 
   panier

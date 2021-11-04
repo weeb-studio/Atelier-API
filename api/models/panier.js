@@ -1,16 +1,17 @@
 const mongoose = require("mongoose");
 
 const panierSchema = new mongoose.Schema({
-    role: {
+    client: {
         type: mongoose.Types.ObjectId,
-        ref: "role",
+        ref: "utilisateur",
+        required:true
       },
     produit: {
         type: mongoose.Types.ObjectId,
         ref: "produit",
-        required: true,
+        required: true
       },
-    quantite: {
+    qte: {
         type : Number,
         required : true
     },
