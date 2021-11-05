@@ -11,4 +11,10 @@ module.exports = function (app) {
   });
   app.post("/panier", [authJwt.verifyToken], controller.addpanier);
   app.get("/panier", [authJwt.verifyToken], controller.get_panier);
+
+  app.delete(
+    "/panier/:id",
+    // [authJwt.verifyToken],
+    controller.delete_product
+  );
 };
