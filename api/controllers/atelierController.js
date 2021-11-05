@@ -158,7 +158,16 @@ exports.getAllHotesseAtelier = (req, res) => {
 exports.getAllVilleAtelier = (req, res) => {
   let query = "";
   if (req.query.ville) query = req.query.ville;
-  Atelier.find({ ville: { $regex: query, $options: "$i" } })
+  Atelier.find({
+    $and: [
+      { ville: { $regex: query, $options: "$i" } },
+      {
+        date: {
+          $gte: new Date(Date.now()),
+        },
+      },
+    ],
+  })
     .populate({
       path: "hotesse conseillere",
       select: "_id nom prenom email adresse ville postal status numero",
