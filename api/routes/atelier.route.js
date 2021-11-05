@@ -19,11 +19,28 @@ module.exports = function (app) {
   app.get(
     "/atelier/conseillere",
     [authJwt.verifyToken, authJwt.isConseillere],
-    controller.getconseillereAtelier
+    controller.getConseillereAtelier
+  );
+
+  app.get("/atelier", controller.getAllAvalableAtelier);
+
+  app.put(
+    "/atelier/inscription/:id",
+    [authJwt.verifyToken],
+    controller.inscriptionAtelier
+  );
+
+  app.put(
+    "/atelier/desinscription/:id",
+    [authJwt.verifyToken],
+    controller.desinscriptionAtelier
   );
 
   app.get(
-    "/atelier",
-    controller.get_all_atelier
+    "/atelier/hotesse",
+    [authJwt.verifyToken],
+    controller.getAllHotesseAtelier
   );
+
+  app.get("/atelier/ville", controller.getAllVilleAtelier);
 };

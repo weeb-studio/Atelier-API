@@ -2,10 +2,53 @@ const mongoose = require("mongoose");
 
 const atelierSchema = new mongoose.Schema(
   {
+    conseillere: {
+      type: mongoose.Types.ObjectId,
+      ref: "utilisateur",
+      require: true,
+    },
+
+    hotesse: {
+      type: mongoose.Types.ObjectId,
+      ref: "utilisateur",
+      require: true,
+    },
+
+    adresse: {
+      type: String,
+      require: true,
+    },
+
+    ville: {
+      type: String,
+      require: true,
+    },
+
+    status: {
+      type: String,
+      enum: ["LIGNE", "DOMICILE"],
+      default: "DOMICILE",
+      required: true,
+    },
+
     place: {
       type: Number,
       required: true,
       min: 1,
+      validate: {
+        validator: Number.isInteger,
+        message: "{VALUE} is not an integer value",
+      },
+    },
+
+    placeTotale: {
+      type: Number,
+      required: true,
+      min: 1,
+      validate: {
+        validator: Number.isInteger,
+        message: "{VALUE} is not an integer value",
+      },
     },
 
     theme: {
@@ -13,29 +56,16 @@ const atelierSchema = new mongoose.Schema(
       required: true,
     },
 
-    hotesse: {
-      type: mongoose.Types.ObjectId,
-      ref: "utilisateur",
-    },
-
-    nomHotesse: {
-      type: String,
-    },
-
-    prenomHotesse: {
-      type: String,
-    },
-
-    adresseHotesse: {
-      type: String,
-    },
-
-    postal: {
+    heure: {
       type: Number,
+      required: true,
+      max: 23,
+      min: 00,
     },
 
-    villeHotesse: {
+    description: {
       type: String,
+      require: true,
     },
 
     date: {
@@ -43,27 +73,12 @@ const atelierSchema = new mongoose.Schema(
       required: true,
     },
 
-    time: {
-      type: Number,
-      required: true,
-      max: 23,
-      min: 00,
-    },
-
-    status: {
-      type: String,
-      required: true,
-    },
-
-    ouvert: {
-      type: Boolean,
-      required: true,
-    },
-
-    conseillere: {
-      type: mongoose.Types.ObjectId,
-      ref: "utilisateur",
-    },
+    participant: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "utilisateur",
+      },
+    ],
   },
   { timestamps: true }
 );
