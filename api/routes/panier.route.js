@@ -19,4 +19,10 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.get_panier
     );
+
+    app.delete(
+      "/panier/:id",
+      // [authJwt.verifyToken],
+      controller.delete_product
+    );
 }

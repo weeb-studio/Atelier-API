@@ -37,4 +37,27 @@ exports.get_panier = (req, res) => {
         err: err,
       });
     });
+    
+};
+
+exports.delete_product = (req, res) => {
+  const id = req.params.id;
+
+  if (id.length != 24) {
+    return res.status(400).send("Identifiant invalide");
+  }
+  Panier.deleteOne({ _id: id })
+    .exec()
+    .then((resultat) => {
+      res.status(200).json({
+        message: "Suppression réussie",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: "Oups!! une erreur est survenue",
+        error: err,
+      });
+    });
 };
