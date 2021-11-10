@@ -63,6 +63,7 @@ require("./api/routes/contact.route")(app);
 require("./api/routes/point.route")(app);
 require("./api/routes/cadeau.route")(app);
 require("./api/routes/panier.route")(app);
+require("./api/routes/profilBeaute.route")(app);
 
 // app.use('/auth', authRoute);
 // app.use('/user', userRoute);

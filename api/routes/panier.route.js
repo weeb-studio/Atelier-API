@@ -10,7 +10,7 @@ module.exports = function (app) {
     next();
   });
   app.post("/panier", [authJwt.verifyToken], controller.addpanier);
-  app.get("/panier", [authJwt.verifyToken], controller.get_panier);
+  app.get("/panier",  [authJwt.verifyToken], controller.get_panier);
 
   app.delete(
     "/panier/:id",
