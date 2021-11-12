@@ -16,6 +16,7 @@ db.contact = require("./Contact");
 db.cadeau = require("./Cadeau");
 db.point = require("./Point");
 db.panier = require("./Panier");
+db.profilBeaute = require("./ProfilBeaute");
 
 db.ROLES = ["user", "hotesse", "conseillere", "admin"];
 
