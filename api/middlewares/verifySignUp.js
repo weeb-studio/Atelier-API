@@ -1,6 +1,8 @@
 const db = require("../models");
+const { find } = require("../models/Utilisateur");
 const ROLES = db.ROLES;
 const User = db.user;
+const ProfilBeaute = db.profilBeaute;
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
   // Numero de telephone
@@ -48,7 +50,9 @@ checkRolesExisted = (req, res, next) => {
     }
   
     next();
-  };
+};
+
+// 
 
 // checkRolesExisted = (req, res, next) => {
 //   if (req.body.role) {
