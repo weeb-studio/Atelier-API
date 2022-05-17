@@ -138,7 +138,7 @@ app.get("/", (req, res) => {
 });
 
 // set port, listen for requests
-const PORT = 3000;
+const PORT = 3500;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
