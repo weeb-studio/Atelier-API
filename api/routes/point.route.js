@@ -1,30 +1,11 @@
-const { authJwt } = require("../middlewares");
-const controller = require("../controllers/pointController");
+const express = require('express')
+const { authJwt } = require('../middlewares')
+const controller = require('../controllers/pointController')
 
-module.exports = function (app) {
-  app.use(function (req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
-    );
-    next();
-  });
+const router = express.Router()
 
-  app.get(
-    "/point",
-    [authJwt.verifyToken, authJwt.isHotesse],
-    controller.getPoints
-  );
+router.get('/point', [authJwt.verifyToken, authJwt.isHotesse], controller.getPoints)
+router.put('/point/add', [authJwt.verifyToken, authJwt.isHotesse], controller.addPoint)
+router.put('/point/remove', [authJwt.verifyToken, authJwt.isHotesse], controller.removePoint)
 
-  app.put(
-    "/point/add",
-    [authJwt.verifyToken, authJwt.isHotesse],
-    controller.addPoint
-  );
-
-  app.put(
-    "/point/remove",
-    [authJwt.verifyToken, authJwt.isHotesse],
-    controller.removePoint
-  );
-};
+module.exports = router

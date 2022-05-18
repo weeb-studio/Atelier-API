@@ -1,51 +1,16 @@
-const { authJwt } = require("../middlewares");
-const controller = require("../controllers/userControllers");
+const express = require('express')
+const { authJwt } = require('../middlewares')
+const controller = require('../controllers/userControllers')
 
-module.exports = function (app) {
-  app.use(function (req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
-    );
-    next();
-  });
+const router = express.Router()
 
-  app.get("/all", controller.allAccess);
+router.get('/user/all', controller.allAccess)
+router.get('/user/board', [authJwt.verifyToken], controller.userBoard)
+router.get('/user/moderated', [authJwt.verifyToken, authJwt.isConseillere], controller.moderatorBoard)
+router.get('/user/admin', [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard)
+router.get('/user/:uid', [authJwt.verifyToken, authJwt.isAdmin], controller.getUserById)
+router.get('/user/invalid', [authJwt.verifyToken, authJwt.isAdmin], controller.unvalidateConseiller)
+router.put('/user/:uid', [authJwt.verifyToken, authJwt.isAdmin], controller.validate)
+router.get('/user/type/:type', [authJwt.verifyToken, authJwt.isAdmin], controller.getTypeOfUsers)
 
-  app.get("/user", [authJwt.verifyToken], controller.userBoard);
-
-  app.get(
-    "/mod",
-    [authJwt.verifyToken, authJwt.isConseillere],
-    controller.moderatorBoard
-  );
-
-  app.get(
-    "/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
-  );
-
-  app.get(
-    "/user/:uid",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.getUserById
-  );
-
-  app.get(
-    "/unvalid",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.unvalidateConseiller
-  );
-  app.put(
-    "/user/:uid",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.validate
-  );
-
-  app.get(
-    "/users/:type",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.getTypeOfUsers
-  );
-};
+module.exports = router

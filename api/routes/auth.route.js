@@ -1,32 +1,18 @@
-const { verifySignUp, authJwt } = require("../middlewares");
-const controller = require("../controllers/authController");
-const upload = require("../utils/upload");
+const express = require('express')
+const { verifySignUp, authJwt } = require('../middlewares')
+const controller = require('../controllers/authController')
+const upload = require('../utils/upload')
 
-module.exports = function (app) {
-  app.use(function (req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
-    );
-    next();
-  });
+const router = express.Router()
 
-  app.post(
-    "/auth/signup",
-    [
-      verifySignUp.checkDuplicateUsernameOrEmail,
-      verifySignUp.checkRolesExisted,
-    ],
-    controller.signup
-  );
+router.post(
+   '/auth/signup',
+   [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted],
+   controller.signup
+)
+router.get('/auth/profile', [authJwt.verifyToken], controller.getCurrentUser)
+router.put('/auth/update', [authJwt.verifyToken], controller.updateUser)
+router.put('/auth/update-profile', authJwt.verifyToken, upload.single('imageURL'), controller.updateUserImage)
+router.post('/auth/signing', controller.signin)
 
-  app.get("/auth/profile", [authJwt.verifyToken], controller.getCurrentUser);
-  app.put("/auth/update", [authJwt.verifyToken], controller.updateUser);
-  app.put(
-    "/auth/updateimage",
-    [authJwt.verifyToken],
-    upload.single("imageURL"),
-    controller.updateUserImage
-  );
-  app.post("/auth/signin", controller.signin);
-};
+module.exports = router
