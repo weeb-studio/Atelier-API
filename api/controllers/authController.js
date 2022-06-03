@@ -16,7 +16,6 @@ exports.signup = (req, res) => {
       ville: req.body.ville,
       postal: req.body.postal,
       numero: req.body.numero,
-      role: req.body.role,
       password: bcrypt.hashSync(req.body.password, 8),
    })
 
@@ -45,11 +44,11 @@ exports.signup = (req, res) => {
                      return
                   }
 
-                  res.send({ message: 'User was registered successfully!' })
+                  res.send({ user })
                })
             })
          } else {
-            res.send({ message: 'Role non definie' })
+            res.status(400).send({ message: 'Role non definie' })
          }
       } else {
          Role.findOne({ nom: 'user' }, (err, role) => {
@@ -65,7 +64,7 @@ exports.signup = (req, res) => {
                   return
                }
 
-               res.send({ message: 'User was registered successfully!' })
+               res.send({ user })
             })
          })
       }
