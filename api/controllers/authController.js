@@ -163,7 +163,7 @@ exports.signin = (req, res) => {
 
          if (!user.status) {
             return res.status(400).send({
-               message: "Votre compte n'a pas encore été.",
+               message: "Votre compte n'a pas encore été validé !.",
             })
          }
 
