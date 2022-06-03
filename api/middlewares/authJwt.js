@@ -15,7 +15,7 @@ verifyToken = (req, res, next) => {
    try {
       jwt.verify(token, config.secret, {}, (err, decoded) => {
          if (err) {
-            return res.status(401).send({ message: 'Vous devez vous connecter!' })
+            return res.status(401).send({ message: 'Vous devez vous connecter!', error: err })
          }
          req.userId = decoded.id
          req.role = decoded.role

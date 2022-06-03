@@ -164,7 +164,7 @@ exports.signin = async (req, res) => {
          })
       }
 
-      jwt.sign({ id: response._id, role: response.role }, config.secret, {}, (err, token) => {
+      jwt.sign({ id: response._id, role: response.role.nom }, config.secret, {}, (err, token) => {
          if (err) {
             console.log('Error : ', err)
             return res.status(404).json({ message: 'Oup!, Une erreur est survenue.', error: err })
