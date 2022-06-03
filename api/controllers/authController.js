@@ -167,7 +167,7 @@ exports.signin = (req, res) => {
             })
          }
 
-         const passwordIsValid = bcrypt.compareSync(req.body.password, user.password)
+         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password)
 
          if (!passwordIsValid) {
             return res.status(400).send({
@@ -175,12 +175,17 @@ exports.signin = (req, res) => {
                message: "Nom d'utilisateur ou mot de passe incorrect.",
             })
          }
-         const token = jwt.sign({ id: user._id, role: user.role.nom }, config.secret, {
-            expiresIn: 864000, // 24 hours
+         var token = jwt.sign({ id: user._id, role: user.role.nom }, config.secret, {
+            expiresIn: 86400, // 24 hours
          })
 
          res.status(200).send({
-            ...user,
+            id: user._id,
+            nom: user.nom,
+            prenom: user.prenom,
+            email: user.email,
+            role: user.role,
+            user,
             accessToken: token,
          })
       })
