@@ -2,125 +2,93 @@ const jwt = require('jsonwebtoken')
 const config = require('../config/auth.config.js')
 const db = require('../models')
 const User = db.user
-const Role = db.role
 
 verifyToken = (req, res, next) => {
    let token = req.headers['x-access-token']
 
    if (!token) {
-      return res.status(403).send({ message: 'No token provided!' })
+      return res.status(403).send({ message: 'Vous devez vous connecter' })
    }
 
-   jwt.verify(token, config.secret, (err, decoded) => {
-      if (err) {
-         return res.status(400).send({ message: 'Unauthorized!', error: err })
-      }
-      // console.log(decoded)
-      req.userId = decoded.id
-      req.role = decoded.role
-      next()
-   })
+   try {
+      jwt.verify(token, config.secret, {}, (err, decoded) => {
+         if (err) {
+            return res.status(401).send({ message: 'Vous devez vous connecter!' })
+         }
+         req.userId = decoded.id
+         req.role = decoded.role
+         next()
+      })
+   } catch (error) {
+      return res.status(500).json(error)
+   }
 }
 
 isAdmin = (req, res, next) => {
-   User.findById(req.userId).exec((err, user) => {
-      if (err) {
-         res.status(500).send({ message: err })
-         return
-      }
-
-      Role.findById(user.role).exec((err, roles) => {
+   User.findById(req.userId)
+      .populate('role')
+      .exec((err, user) => {
          if (err) {
             res.status(500).send({ message: err })
             return
          }
-         if (roles.nom === 'admin') {
+
+         if (user === null || user === {}) {
+            return res.status(404).json({ message: "L'utilisateur n'existe pas" })
+         }
+
+         if (user.role === 'admin') {
             next()
             return
          }
 
          res.status(403).send({ message: 'Require Admin Role!' })
-         return
       })
-   })
 }
 
 isHotesse = (req, res, next) => {
-   User.findById(req.userId).exec((err, user) => {
-      if (err) {
-         res.status(500).send({ message: err })
-         return
-      }
-
-      Role.findById(user.role).exec((err, roles) => {
+   User.findById(req.userId)
+      .populate('role')
+      .exec((err, user) => {
          if (err) {
             res.status(500).send({ message: err })
             return
          }
-         if (roles.nom === 'hotesse') {
+
+         if (user === null || user === {}) {
+            return res.status(404).json({ message: "L'utilisateur n'existe pas" })
+         }
+
+         if (user.role === 'hotesse') {
             next()
             return
          }
 
-         res.status(403).send({ message: 'Require Hotesse Role!' })
-         return
+         res.status(403).send({ message: 'Require Hôtesse Role!' })
       })
-   })
 }
 
 isConseillere = (req, res, next) => {
-   User.findById(req.userId).exec((err, user) => {
-      if (err) {
-         res.status(500).send({ message: err })
-         return
-      }
-
-      Role.findById(user.role).exec((err, roles) => {
+   User.findById(req.userId)
+      .populate('role')
+      .exec((err, user) => {
          if (err) {
             res.status(500).send({ message: err })
             return
          }
-         if (roles.nom === 'conseillere') {
+
+         if (user === null || user === {}) {
+            return res.status(404).json({ message: "L'utilisateur n'existe pas" })
+         }
+
+         if (user.role === 'conseillere') {
             next()
             return
          }
 
-         res.status(403).send({ message: 'Require Conseillere Role!' })
-         return
+         res.status(403).send({ message: 'Require Conseillère Role!' })
       })
-   })
 }
-
-// isModerator = (req, res, next) => {
-//   User.findById(req.userId).exec((err, user) => {
-//     if (err) {
-//       res.status(500).send({ message: err });
-//       return;
-//     }
-
-//     Role.find(
-//       {
-//         _id: { $in: user.roles }
-//       },
-//       (err, roles) => {
-//         if (err) {
-//           res.status(500).send({ message: err });
-//           return;
-//         }
-
-//         for (let i = 0; i < roles.length; i++) {
-//           if (roles[i].name === "moderator") {
-//             next();
-//             return;
-//           }
-//         }
-
-//         res.status(403).send({ message: "Require Moderator Role!" });
-//         return;
-//       }
-//     );
-//   });
-// };
 
 const authJwt = {
    verifyToken,
