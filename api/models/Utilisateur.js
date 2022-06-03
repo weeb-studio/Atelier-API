@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema(
 
       ville: {
          type: String,
-         required: true,
+         required: false,
          max: 255,
       },
 
