@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema(
 
       adresse: {
          type: String,
-         required: true,
+         required: false,
       },
 
       ville: {
@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema(
 
       postal: {
          type: Number,
-         required: true,
+         required: false,
          max: 999999,
       },
 

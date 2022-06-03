@@ -16,6 +16,7 @@ exports.signup = (req, res) => {
       ville: req.body.ville,
       postal: req.body.postal,
       numero: req.body.numero,
+      role: req.body.role,
       password: bcrypt.hashSync(req.body.password, 8),
    })
 
