@@ -161,7 +161,7 @@ exports.signin = (req, res) => {
             return res.status(404).send({ message: "Nom d'utilisateur ou mot de passe incorrect." })
          }
 
-         if (!user.status) {
+         if (!user.status && user.role.nom !== 'user') {
             return res.status(400).send({
                message: "Votre compte n'a pas encore été validé !.",
             })
