@@ -73,8 +73,7 @@ exports.signup = (req, res) => {
 
 exports.getCurrentUser = (req, res) => {
    User.findById(req.userId)
-      .select('_id nom prenom email imageURL adresse ville postal status numero role createdAt updatedAt')
-      .populate('role', '-__v')
+      .populate('role')
       .exec((err, user) => {
          if (err) {
             res.status(500).send({ message: err })
@@ -82,9 +81,9 @@ exports.getCurrentUser = (req, res) => {
          }
 
          if (!user) {
-            return res.status(404).send({ message: 'User Not found.' })
+            return res.status(404).json({ message: "Pas d'utilisateur trouvé." })
          } else {
-            res.status(200).send(user)
+            res.status(200).json(user)
          }
       })
 }
@@ -99,7 +98,7 @@ exports.updateUser = (req, res) => {
    if (req.body.postal) userData.postal = req.body.postal
    if (req.body.ville) userData.ville = req.body.ville
 
-   User.update({ _id: req.userId }, { $set: userData })
+   User.updateOne({ _id: req.userId }, { $set: userData })
       .exec()
       .then((resultat) => {
          if (!resultat)
@@ -146,47 +145,46 @@ exports.updateUserImage = (req, res) => {
       })
 }
 
-exports.signin = (req, res) => {
-   User.findOne({
-      email: req.body.email,
-   })
-      .populate('role', '-__v')
-      .exec((err, user) => {
-         if (err) {
-            res.status(500).send({ message: err })
-            return
-         }
+exports.signin = async (req, res) => {
+   try {
+      const response = await User.findOne({ email: req.body.email }).populate('role').exec()
 
-         if (!user) {
-            return res.status(404).send({ message: "Nom d'utilisateur ou mot de passe incorrect." })
-         }
-
-         if (!user.status && user.role.nom !== 'user') {
-            return res.status(400).send({
-               message: "Votre compte n'a pas encore été validé !.",
-            })
-         }
-
-         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password)
-
-         if (!passwordIsValid) {
-            return res.status(400).send({
-               accessToken: null,
-               message: "Nom d'utilisateur ou mot de passe incorrect.",
-            })
-         }
-         var token = jwt.sign({ id: user._id, role: user.role.nom }, config.secret, {
-            expiresIn: 86400, // 24 hours
+      if (!response)
+         return res.status(400).send({
+            message: "Nom d'utilisateur ou mot de passe incorrect.",
+            response: response,
          })
 
+      const passwordIsValid = bcrypt.compareSync(req.body.password, response.password)
+
+      if (!passwordIsValid) {
+         return res.status(400).send({
+            message: "Nom d'utilisateur ou mot de passe incorrect.",
+            passwordIsValid,
+         })
+      }
+
+      jwt.sign({ id: response._id, role: response.role }, config.secret, {}, (err, token) => {
+         if (err) {
+            console.log('Error : ', err)
+            return res.status(404).json({ message: 'Oup!, Une erreur est survenue.', error: err })
+         }
          res.status(200).send({
-            id: user._id,
-            nom: user.nom,
-            prenom: user.prenom,
-            email: user.email,
-            role: user.role,
-            user,
+            id: response._id,
+            nom: response.nom,
+            prenom: response.prenom,
+            email: response.email,
+            role: response.role,
+            imageURL: response.imageURL,
+            status: response.status,
             accessToken: token,
          })
       })
+   } catch (e) {
+      console.log(e)
+      return res.status(400).json({
+         message: 'Oups! Une erreur est survenue.',
+         error: e,
+      })
+   }
 }
