@@ -13,7 +13,7 @@ verifyToken = (req, res, next) => {
 
    jwt.verify(token, config.secret, (err, decoded) => {
       if (err) {
-         return res.status(401).send({ message: 'Unauthorized!' })
+         return res.status(400).send({ message: 'Unauthorized!', error: err })
       }
       // console.log(decoded)
       req.userId = decoded.id
@@ -126,6 +126,6 @@ const authJwt = {
    verifyToken,
    isAdmin,
    isHotesse,
-   isConseillere
+   isConseillere,
 }
 module.exports = authJwt
