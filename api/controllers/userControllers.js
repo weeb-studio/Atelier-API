@@ -5,6 +5,62 @@ exports.allAccess = (req, res) => {
    res.status(200).send('Public Content.')
 }
 
+exports.getConseillers = async (req, res) => {
+   try {
+      const response = await User.find().populate('role').exec()
+      const result = response.filter((item) => item.role && item.role.nom === 'conseillere' && item.status)
+      res.json(result)
+   } catch (e) {
+      console.log(e)
+      res.status(401).json({
+         message: 'Erreur lors de la récupération des conseillères',
+         error: e.message,
+      })
+   }
+}
+
+exports.getAttemptAccounts = async (req, res) => {
+   try {
+      const response = await User.find().populate('role').exec()
+      const result = response.filter((item) => item.role && item.role.nom === 'conseillere' && !item.status)
+      res.json(result)
+   } catch (e) {
+      console.log(e)
+      res.status(401).json({
+         message: 'Erreur lors de la récupération des conseillères',
+         error: e.message,
+      })
+   }
+}
+
+exports.getHotesses = async (req, res) => {
+   try {
+      const response = await User.find().populate('role').exec()
+      const result = response.filter((item) => item.role && item.role.nom === 'hotesse')
+      res.json(result)
+   } catch (e) {
+      console.log(e)
+      res.status(401).json({
+         message: 'Erreur lors de la récupération des conseillères',
+         error: e.message,
+      })
+   }
+}
+
+exports.getClientes = async (req, res) => {
+   try {
+      const response = await User.find().populate('role').exec()
+      const result = response.filter((item) => item.role && item.role.nom === 'user')
+      res.json(result)
+   } catch (e) {
+      console.log(e)
+      res.status(401).json({
+         message: 'Erreur lors de la récupération des conseillères',
+         error: e.message,
+      })
+   }
+}
+
 exports.userBoard = (req, res) => {
    res.status(200).send('User Content.')
 }
@@ -91,7 +147,6 @@ exports.getUserById = (req, res) => {
    User.findById(uid)
       .populate('role', '-__v')
       .select('_id nom prenom email imageURL adresse ville postal status numero role createdAt updatedAt')
-
       .exec((err, user) => {
          if (err) {
             res.status(500).send({ message: err })
