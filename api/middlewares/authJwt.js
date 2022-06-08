@@ -27,25 +27,8 @@ verifyToken = (req, res, next) => {
 }
 
 isAdmin = (req, res, next) => {
-   User.findById(req.userId)
-      .populate('role')
-      .exec((err, user) => {
-         if (err) {
-            res.status(500).send({ message: err })
-            return
-         }
-
-         if (user === null || user === {}) {
-            return res.status(404).json({ message: "L'utilisateur n'existe pas" })
-         }
-
-         if (user.role === 'admin') {
-            next()
-            return
-         }
-
-         res.status(403).send({ message: 'Require Admin Role!' })
-      })
+   if (req.role === 'admin') next()
+   else res.status(403).send({ message: 'Require Admin Role!' })
 }
 
 isHotesse = (req, res, next) => {
