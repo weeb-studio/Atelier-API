@@ -13,9 +13,9 @@ router.get('/user/invalid', [authJwt.verifyToken, authJwt.isAdmin], controller.u
 router.put('/user/:uid', [authJwt.verifyToken, authJwt.isAdmin], controller.validate)
 router.get('/user/type/:type', [authJwt.verifyToken, authJwt.isAdmin], controller.getTypeOfUsers)
 
-router.get('/user-conseillers', controller.getConseillers)
-router.get('/user-hotesses', controller.getHotesses)
-router.get('/user-clientes', controller.getClientes)
-router.get('/user-attempt', controller.getAttemptAccounts)
+router.get('/user-conseillers', [authJwt.verifyToken, authJwt.isAdmin], controller.getConseillers)
+router.get('/user-hotesses', [authJwt.verifyToken, authJwt.isAdmin], controller.getHotesses)
+router.get('/user-clientes', [authJwt.verifyToken, authJwt.isAdmin], controller.getClientes)
+router.get('/user-attempt', [authJwt.verifyToken, authJwt.isAdmin], controller.getAttemptAccounts)
 
 module.exports = router
