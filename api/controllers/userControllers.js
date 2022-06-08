@@ -73,26 +73,48 @@ exports.moderatorBoard = (req, res) => {
    res.status(200).send('Moderator Content.')
 }
 
-exports.validate = (req, res) => {
-   const id = req.params.uid
-   const user = {}
-   if (req.body.status) user.status = req.body.status
-   User.findOneAndUpdate({ _id: id }, { $set: user })
-      .exec()
-      .then((resultat) => {
-         if (!resultat)
-            return res.status(404).json({
-               message: "Oups!! aucune information pour l'identifiant fourni",
-            })
-         res.status(200).json(resultat)
-      })
-      .catch((err) => {
-         console.log(err)
-         res.status(500).json({
-            message: 'Oups!! une erreur est survenue',
-            error: err,
+exports.changeStatus = async (req, res) => {
+   try {
+      const id = req.body.id
+      const status = req.body.status
+      if (!id)
+         return res.status(402).json({
+            message: "Veuillez indiquer l'identifiant du compte.",
+            error: {},
          })
+      if (!status)
+         return res.status(402).json({
+            message: 'Veuillez indiquer le nouveau status du compte.',
+            error: {},
+         })
+      const response = await User.findOneAndUpdate({ _id: id }, { status })
+      res.json(response)
+   } catch (e) {
+      console.log(e)
+      res.status(402).json({
+         message: 'Une erreur est survenue !',
+         error: e.message,
       })
+   }
+}
+
+exports.updateUser = async (req, res) => {
+   try {
+      const id = req.body.id
+      if (!id)
+         return res.status(402).json({
+            message: "Veuillez indiquer l'identifiant du compte.",
+            error: {},
+         })
+      const response = await User.findOneAndUpdate({ _id: id }, req.body)
+      res.json(response)
+   } catch (e) {
+      console.log(e)
+      res.status(402).json({
+         message: 'Une erreur est survenue !',
+         error: e.message,
+      })
+   }
 }
 
 exports.unvalidateConseiller = (req, res) => {

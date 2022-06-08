@@ -10,10 +10,11 @@ router.get('/user/moderated', [authJwt.verifyToken, authJwt.isConseillere], cont
 router.get('/user/admin', [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard)
 router.get('/user/:uid', [authJwt.verifyToken, authJwt.isAdmin], controller.getUserById)
 router.get('/user/invalid', [authJwt.verifyToken, authJwt.isAdmin], controller.unvalidateConseiller)
-router.put('/user/:uid', [authJwt.verifyToken, authJwt.isAdmin], controller.validate)
+router.put('/user/:uid', [authJwt.verifyToken, authJwt.isAdmin], controller.updateUser)
 router.get('/user/type/:type', [authJwt.verifyToken, authJwt.isAdmin], controller.getTypeOfUsers)
 
 router.get('/user-conseillers', [authJwt.verifyToken, authJwt.isAdmin], controller.getConseillers)
+router.put('/user-conseillers', [authJwt.verifyToken, authJwt.isAdmin], controller.changeStatus)
 router.get('/user-hotesses', [authJwt.verifyToken, authJwt.isAdmin], controller.getHotesses)
 router.get('/user-clientes', [authJwt.verifyToken, authJwt.isAdmin], controller.getClientes)
 router.get('/user-attempt', [authJwt.verifyToken, authJwt.isAdmin], controller.getAttemptAccounts)
