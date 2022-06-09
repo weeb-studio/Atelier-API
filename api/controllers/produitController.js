@@ -56,7 +56,7 @@ exports.getAllProduct = async (req, res) => {
 
 exports.getAllSoinsProduct = async (req, res) => {
    try {
-      const response = await Produit.find({ type: 'soins' })
+      const response = await Produit.find({ product_type: 'soins' })
       res.json(response)
    } catch (e) {
       res.status(400).json({
@@ -68,7 +68,7 @@ exports.getAllSoinsProduct = async (req, res) => {
 
 exports.getAllCoiffureProduct = async (req, res) => {
    try {
-      const response = await Produit.find({ type: 'coiffure' })
+      const response = await Produit.find({ product_type: 'coiffure' })
       res.json(response)
    } catch (e) {
       res.status(400).json({
