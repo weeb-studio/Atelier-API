@@ -2,41 +2,41 @@ const mongoose = require('mongoose')
 
 const produitSchema = new mongoose.Schema(
    {
-      nom: {
+      product_img: {
+         type: String,
+         required: false,
+      },
+      product_name: {
          type: String,
          required: true,
       },
-
-      imageURL: {
-         type: String,
-         default: 'default.jpg',
-         required: true,
-      },
-
-      description: {
+      product_ref: {
          type: String,
          required: true,
       },
-
-      prix: {
+      product_mark: {
+         type: String,
+         required: true,
+      },
+      product_price: {
          type: Number,
          required: true,
       },
-
-      unite: {
-         type: String,
-         enum: ['ml', 'mg', 'taille'],
-         required: true,
-      },
-
-      capacite: {
+      product_qte: {
          type: Number,
          required: true,
       },
-
-      categorie: {
+      product_content: {
          type: String,
-         enum: ['COIFFURES', 'CAPILLAIRES'],
+         required: true,
+      },
+      product_category: {
+         type: String,
+         required: true,
+      },
+      product_type: {
+         type: String,
+         enum: ['soins', 'coiffure'],
          required: true,
       },
    },
