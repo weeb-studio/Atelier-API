@@ -34,6 +34,10 @@ const produitSchema = new mongoose.Schema(
          type: String,
          required: true,
       },
+      product_description: {
+         type: String,
+         required: true,
+      },
       product_type: {
          type: String,
          enum: ['soins', 'coiffure'],
