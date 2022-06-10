@@ -62,7 +62,7 @@ exports.deleteAtelier = async (req, res) => {
 
 exports.getAllAtelier = async (req, res) => {
    try {
-      const response = await Atelier.find()
+      const response = await Atelier.find().populate('conseillere hotesse').exec()
       res.json(response)
    } catch (error) {
       console.log(error)
@@ -75,7 +75,7 @@ exports.getAllAtelier = async (req, res) => {
 
 exports.getAteliersByStatus = async (req, res) => {
    try {
-      const response = await Atelier.find({ status: req.params.status })
+      const response = await Atelier.find({ status: req.params.status }).populate('conseillere hotesse').exec()
       res.json(response)
    } catch (error) {
       console.log(error)
@@ -88,7 +88,7 @@ exports.getAteliersByStatus = async (req, res) => {
 
 exports.getAllCityAteliers = async (req, res) => {
    try {
-      const response = await Atelier.find({ city: req.params.city })
+      const response = await Atelier.find({ city: req.params.city }).populate('conseillere hotesse').exec()
       res.json(response)
    } catch (error) {
       console.log(error)
@@ -101,7 +101,7 @@ exports.getAllCityAteliers = async (req, res) => {
 
 exports.getHotesseAteliers = async (req, res) => {
    try {
-      const response = await Atelier.find({ hotesse: req.params.id })
+      const response = await Atelier.find({ hotesse: req.params.id }).populate('conseillere hotesse').exec()
       res.json(response)
    } catch (error) {
       console.log(error)
@@ -114,7 +114,7 @@ exports.getHotesseAteliers = async (req, res) => {
 
 exports.getConseillerAteliers = async (req, res) => {
    try {
-      const response = await Atelier.find({ conseillere: req.params.id })
+      const response = await Atelier.find({ conseillere: req.params.id }).populate('conseillere hotesse').exec()
       res.json(response)
    } catch (error) {
       console.log(error)
