@@ -61,7 +61,6 @@ isConseillere = (req, res, next) => {
             res.status(500).send({ message: err })
             return
          }
-
          if (user === null || user === {}) {
             return res.status(404).json({ message: "L'utilisateur n'existe pas" })
          }
