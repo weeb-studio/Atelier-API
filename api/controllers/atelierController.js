@@ -34,7 +34,7 @@ exports.updateAtelier = async (req, res) => {
 
 exports.addNewSubscription = async (req, res) => {
    try {
-      const newSubscription = new atelierModel.subscriberModel(req.body)
+      const newSubscription = req.body
       const atelier = await Atelier.findOne({ _id: req.params.id })
       const subscriptions = [...atelier.subscriptions, newSubscription]
       const response = await atelier.update({ subscriptions })
