@@ -1,5 +1,4 @@
 const db = require('../models')
-const atelierModel = require('../models/Atelier')
 const Atelier = db.atelier
 
 exports.createAtelier = async (req, res) => {
