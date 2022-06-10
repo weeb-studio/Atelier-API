@@ -1,5 +1,5 @@
 const db = require('../models')
-const { subscriberModel } = require('../models/Atelier')
+const atelierModel = require('../models/Atelier')
 const Atelier = db.atelier
 
 exports.createAtelier = async (req, res) => {
@@ -34,7 +34,7 @@ exports.updateAtelier = async (req, res) => {
 
 exports.addNewSubscription = async (req, res) => {
    try {
-      const newSubscription = new subscriberModel(req.body)
+      const newSubscription = new atelierModel.subscriberModel(req.body)
       const atelier = await Atelier.findOne({ _id: req.params.id })
       const subscriptions = [...atelier.subscriptions, newSubscription]
       const response = await atelier.update({ subscriptions })
