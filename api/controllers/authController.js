@@ -88,6 +88,17 @@ exports.getCurrentUser = (req, res) => {
       })
 }
 
+exports.getUserByEmail = (req, res) => {
+   User.findOne({ email: req.params.email }, (error, response) => {
+      if (error)
+         return res.status(400).json({
+            message: 'Erreur lors de la récupération des infos',
+            error: error,
+         })
+      res.json(response)
+   })
+}
+
 exports.updateUser = (req, res) => {
    let userData = {}
 

@@ -10,6 +10,7 @@ router.post(
    [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted],
    controller.signup
 )
+router.get('/auth/email/:email', [authJwt.verifyToken], controller.getUserByEmail)
 router.get('/auth/profile', [authJwt.verifyToken], controller.getCurrentUser)
 router.put('/auth/update', [authJwt.verifyToken], controller.updateUser)
 router.put('/auth/update-profile', authJwt.verifyToken, upload.single('imageURL'), controller.updateUserImage)
