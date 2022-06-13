@@ -74,9 +74,13 @@ const atelierSchema = new mongoose.Schema(
          require: true,
       },
       hotesse: {
-         type: mongoose.Types.ObjectId,
-         ref: 'utilisateur',
-         require: false,
+         type: String,
+         require: true,
+      },
+      hotesse_points: {
+         type: Number,
+         required: false,
+         default: 0,
       },
       subscriptions: [subscriberSchema],
    },
