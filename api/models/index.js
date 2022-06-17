@@ -10,13 +10,14 @@ db.role = require('./Role')
 db.atelier = require('./Atelier')
 db.document = require('./Document')
 db.formation = require('./Formation')
-db.produit = require('./Produit')
+db.produit = require('./Produit').ProductModel
 db.catalogue = require('./Catalogue')
 db.contact = require('./Contact')
 db.cadeau = require('./Cadeau')
 db.point = require('./Point')
 db.panier = require('./Panier')
 db.profilBeaute = require('./ProfilBeaute')
+db.commande = require('./Commande')
 
 db.ROLES = ['user', 'hotesse', 'conseillere', 'admin']
 
