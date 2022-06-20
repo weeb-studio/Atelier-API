@@ -145,7 +145,10 @@ exports.getByStatus = async (req, res) => {
 
 exports.create = async (req, res) => {
     try {
-        const data = req.body
+        const data = {
+            ...req.body,
+            conseillere: req.userId
+        }
         const commande = new Commande(data)
         const response = await commande.save()
         res.json(response)
