@@ -41,6 +41,11 @@ const commandSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    conseillere: {
+      type: mongoose.Types.ObjectId,
+      ref: 'utilisateur',
+        required: true
+    },
     hotesse_name: {
         type: String,
         required: true
