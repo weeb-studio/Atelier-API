@@ -54,6 +54,7 @@ app.use('/', require('./api/routes/point.route'))
 app.use('/', require('./api/routes/cadeau.route'))
 app.use('/', require('./api/routes/panier.route'))
 app.use('/', require('./api/routes/commande.route'))
+app.use('/', require('./api/routes/hotesse-commande.route'))
 app.use('/', require('./api/routes/profilBeaute.route'))
 
 // set port, listen for requests
