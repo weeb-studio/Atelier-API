@@ -4,6 +4,8 @@ const Commande = db.hotesse_commande
 exports.getAll = async (req, res) => {
     try {
         const response = await Commande.find()
+            .populate('hotesse')
+            .exec()
         res.json(response)
     } catch (e) {
         console.log(e)
@@ -17,6 +19,8 @@ exports.getAll = async (req, res) => {
 exports.getByStatus = async (req, res) => {
     try {
         const response = await Commande.find({status: req.params.status})
+            .populate('hotesse')
+            .exec()
         res.json(response)
     } catch (e) {
         console.log(e)
