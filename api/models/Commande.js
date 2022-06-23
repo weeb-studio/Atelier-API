@@ -46,6 +46,11 @@ const commandSchema = new mongoose.Schema({
       ref: 'utilisateur',
         required: true
     },
+    commission: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
     hotesse_name: {
         type: String,
         required: true
