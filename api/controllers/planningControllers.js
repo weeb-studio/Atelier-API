@@ -21,11 +21,13 @@ exports.getAllOfUser = async (req, res) => {
    }
 }
 
+const createPlanning = async (item) => await item.save()
+
 exports.create = async (req, res) => {
    try {
-      const planning = new Planning(req.body)
-      const response = await planning.save()
-      res.json(response)
+      const plages = req.body.plages.map(item => new Planning(item))
+      plages.map(createPlanning)
+      res.json({status: 'OK'})
    } catch (e) {
       console.log(e)
       res.status(402).json({
@@ -50,6 +52,20 @@ exports.delete = async (req, res) => {
    try {
       const response = await Planning.findOneAndDelete({ _id: req.params.id })
       res.json(response)
+   } catch (e) {
+      console.log(e)
+      res.status(402).json({
+         message: e.message,
+      })
+   }
+}
+
+const deletePlanning = async (item) => await Planning.findOneAndDelete({ _id: item })
+
+exports.deleteMany = async (req, res) => {
+   try {
+      req.body.planning.forEach(deletePlanning)
+      res.json({status: 'OK'})
    } catch (e) {
       console.log(e)
       res.status(402).json({
