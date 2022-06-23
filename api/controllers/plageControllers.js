@@ -47,3 +47,17 @@ exports.delete = async (req, res) => {
       })
    }
 }
+
+const deletePlanning = async (item) => await Plage.findOneAndDelete({ _id: item })
+
+exports.deleteMany = async (req, res) => {
+   try {
+      req.body.planning.forEach(deletePlanning)
+      res.json({status: 'OK'})
+   } catch (e) {
+      console.log(e)
+      res.status(402).json({
+         message: e.message,
+      })
+   }
+}
