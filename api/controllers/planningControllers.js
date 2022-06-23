@@ -13,7 +13,7 @@ exports.getAll = async (req, res) => {
 
 exports.getAllOfUser = async (req, res) => {
    try {
-      const response = await Planning.find({user: req.params.user_id})
+      const response = await Planning.find({user: req.params.user_id, date: req.query.date})
       res.json(response)
    } catch (e) {
       console.log(e)
