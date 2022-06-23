@@ -56,6 +56,8 @@ app.use('/', require('./api/routes/panier.route'))
 app.use('/', require('./api/routes/commande.route'))
 app.use('/', require('./api/routes/hotesse-commande.route'))
 app.use('/', require('./api/routes/profilBeaute.route'))
+app.use('/', require('./api/routes/plage.route'))
+app.use('/', require('./api/routes/planning.route'))
 
 // set port, listen for requests
 const PORT = 3500
