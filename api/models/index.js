@@ -20,6 +20,7 @@ db.profilBeaute = require('./ProfilBeaute')
 db.commande = require('./Commande')
 db.hotesse_commande = require('./HotesseCommande')
 db.planning = require('./Planning')
+db.notification = require('./Notifications')
 db.plage = require('./Plages')
 
 db.ROLES = ['user', 'hotesse', 'conseillere', 'admin']

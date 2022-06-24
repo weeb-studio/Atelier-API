@@ -1,4 +1,5 @@
 const db = require('../models')
+const socket = require("../config/socket-client.config");
 const Commande = db.hotesse_commande
 
 exports.getAll = async (req, res) => {
@@ -39,6 +40,14 @@ exports.create = async (req, res) => {
         }
         const commande = new Commande(data)
         const response = await commande.save()
+        socket.emit('notify', {
+            title: 'Nouvelle commande hôtesse',
+            message: 'Nouvelle commande de produits (' + response.product_list.lenght + ' articles) faite par une hôtesse.',
+            cmd: response._id,
+            sender: req.userId,
+            receiver: 'admin',
+            type: 'CMD'
+        })
         res.json(response)
     } catch (e) {
         console.log(e)

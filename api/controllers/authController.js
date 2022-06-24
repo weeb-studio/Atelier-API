@@ -6,6 +6,7 @@ const ROLES = db.ROLES
 
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const socket = require("../config/socket-client.config");
 
 exports.signup = (req, res) => {
    const user = new User({
@@ -43,6 +44,14 @@ exports.signup = (req, res) => {
                      res.status(500).send({ message: err })
                      return
                   }
+
+                  socket.emit('notify', {
+                     title: 'Nouvelle demande de conseillère',
+                     message: `Md. ${user.prenom} ${user.nom} viens de faire une demande pour devenir conseillère.`,
+                     sender: user._id,
+                     receiver: 'admin',
+                     type: 'NC'
+                  })
 
                   res.send({ user })
                })

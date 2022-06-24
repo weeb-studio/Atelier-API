@@ -58,9 +58,13 @@ app.use('/', require('./api/routes/hotesse-commande.route'))
 app.use('/', require('./api/routes/profilBeaute.route'))
 app.use('/', require('./api/routes/plage.route'))
 app.use('/', require('./api/routes/planning.route'))
+app.use('/', require('./api/routes/notification.route'))
 
 // set port, listen for requests
 const PORT = 3500
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
    console.log(`Server is running on port ${PORT}.`)
 })
+
+// Socket io, initialize.
+require('./socket')(server)

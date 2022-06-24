@@ -1,9 +1,9 @@
 const db = require('../models')
-const Plage = db.plage
+const Notification = db.notification
 
 exports.getAll = async (req, res) => {
    try {
-      const response = await Plage.find()
+      const response = await Notification.find()
       res.json(response)
    } catch (e) {
       console.log(e)
@@ -13,8 +13,8 @@ exports.getAll = async (req, res) => {
 
 exports.create = async (req, res) => {
    try {
-      const plage = new Plage(req.body)
-      const response = await plage.save()
+      const notification = new Notification(req.body)
+      const response = await notification.save()
       res.json(response)
    } catch (e) {
       console.log(e)
@@ -26,7 +26,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
    try {
-      const response = await Plage.findOneAndUpdate({ _id: req.params.id }, req.body)
+      const response = await Notification.findOneAndUpdate({ _id: req.params.id }, req.body)
       res.json(response)
    } catch (e) {
       console.log(e)
@@ -38,7 +38,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
    try {
-      const response = await Plage.findOneAndDelete({ _id: req.params.id })
+      const response = await Notification.findOneAndDelete({ _id: req.params.id })
       res.json(response)
    } catch (e) {
       console.log(e)

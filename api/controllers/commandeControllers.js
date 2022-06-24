@@ -1,5 +1,7 @@
 const db = require('../models')
 const Stripe = require("stripe");
+const socket = require('../config/socket-client.config')
+
 const Commande = db.commande
 
 const stripe = Stripe(
@@ -151,6 +153,16 @@ exports.create = async (req, res) => {
         }
         const commande = new Commande(data)
         const response = await commande.save()
+        socket.emit('notify', {
+            title: 'Nouvelle commande Atelier',
+            message: 'Nouvelle commande émit pour la cliente ' + response.cliente.firstname + ' ' +
+                response.cliente.lastname + ' Pour l\'adresse : ' + response.cliente.address + ', ' +
+                response.cliente.postal_code,
+            cmd_bon: response._id,
+            sender: req.userId,
+            receiver: 'admin',
+            type: 'CMDB'
+        })
         res.json(response)
     } catch (e) {
         console.log(e)
