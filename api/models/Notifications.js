@@ -31,12 +31,11 @@ const NotificationSchema = new mongoose.Schema({
    },
    type: {
       type: String,
-      enum: ['CMD', 'CMDB', 'MSG'],
+      enum: ['CMD', 'CMDB', 'MSG', 'NC'],
       required: true
    },
    is_read: {
       type: Boolean,
-      required: true,
       default: false
    }
 }, {timestamps: true})

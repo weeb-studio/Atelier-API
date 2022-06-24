@@ -1,5 +1,6 @@
 const socket = require('socket.io')
-const NotificationController = require('./api/controllers/notificationControllers')
+const db = require('./api/models')
+const Notification = db.notification
 
 module.exports = (server) => {
     let io = socket(server, {
@@ -19,8 +20,13 @@ module.exports = (server) => {
         })
 
         socket.on('notify', async (data) => {
-            const response = await NotificationController.create(data)
-            io.emit('notify', response)
+            try {
+                const notification = new Notification(data)
+                const response = await notification.save()
+                io.emit('notify', response)
+            } catch (e) {
+                console.log(e)
+            }
         })
     })
 }
