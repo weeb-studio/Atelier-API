@@ -20,6 +20,7 @@ module.exports = (server) => {
         })
 
         socket.on('notify', async (data) => {
+            console.log('Notification Data : ', data)
             try {
                 const notification = new Notification(data)
                 const response = await notification.save()
