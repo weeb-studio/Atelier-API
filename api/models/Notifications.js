@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const PlanningSchema = new mongoose.Schema({
+const NotificationSchema = new mongoose.Schema({
    title: {
       type: String,
       required: true
@@ -36,4 +36,4 @@ const PlanningSchema = new mongoose.Schema({
    }
 }, {timestamps: true})
 
-module.exports = mongoose.model('planning', PlanningSchema)
+module.exports = mongoose.model('notification', NotificationSchema)

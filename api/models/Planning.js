@@ -15,6 +15,6 @@ const PlanningSchema = new mongoose.Schema({
       type: Date,
       required: true
    }
-})
+}, {timestamps: true})
 
 module.exports = mongoose.model('planning', PlanningSchema)

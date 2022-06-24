@@ -18,10 +18,10 @@ db.point = require('./Point')
 db.panier = require('./Panier')
 db.profilBeaute = require('./ProfilBeaute')
 db.commande = require('./Commande')
-db.hotesse_commande = require('./HotesseCommande')
-db.planning = require('./Planning')
 db.notification = require('./Notifications')
 db.plage = require('./Plages')
+db.hotesse_commande = require('./HotesseCommande')
+db.planning = require('./Planning')
 
 db.ROLES = ['user', 'hotesse', 'conseillere', 'admin']
 
